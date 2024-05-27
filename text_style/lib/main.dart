@@ -10,14 +10,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Nazalization',),
+      theme: ThemeData(fontFamily: 'Nazalization',
+      brightness: Brightness.light,
+      primaryColor: Colors.purple.shade300,
+      ),
       home: Scaffold(
+        backgroundColor: Colors.purple.shade100,
         appBar: AppBar(
           title: Text(
             'Aplicativo Exemplo Scaffold',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.purple.shade500,
         ),
         body: Center(
           child: Text(
