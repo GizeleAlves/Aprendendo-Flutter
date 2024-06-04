@@ -3,24 +3,30 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 void main() async {
-  Uri uri = Uri.https('jsonplaceholder.typicode.com', '/todos/1');
+  Uri uri = Uri.https('jsonplaceholder.typicode.com', '/todos/');
   final future = http.get(uri);
   future.then((response) {
     if (response.statusCode == 200) {
       print('Página carregada ok.');
 
-      print(json.decode(response.body));
-      Map<String, dynamic> dados = json.decode(response.body);
-      //print(dados);
+      //print(json.decode(response.body));
 
-      /*Todo todo = Todo(
-          dados['userId'], dados['id'], dados['title'], dados['completed']); */
+      var lista = json.decode(response.body) as List;
+      //print(lista);
 
-      //print(dados['title']);
+      /*lista.forEach((element) {
+        //print(element['title']);
+        print(Todo.fromJson(element).title);
+      });*/
 
-      Todo todo = Todo.fromJson(dados);
-      //print(todo.title);
-      print(todo.toJson());
+      var minhaLista = Todos(lista);
+      //print(minhaLista.todos.length);
+      minhaLista.todos.forEach((element) {
+        //print(element);
+
+        var todo = Todo.fromJson(element);
+        print(todo.title);
+      });
     } else {
       print('Deu erro!');
     }
@@ -40,10 +46,30 @@ class Todo {
   }
 
   Map<String, dynamic> toJson() => {
-    'userId': this.userId,
-    'id': this.id,
-    'title': this.title,
-    'completed': this.completed,
-  };
-  
+        'userId': this.userId,
+        'id': this.id,
+        'title': this.title,
+        'completed': this.completed,
+      };
 }
+
+class Todos {
+  List todos = [];
+
+  Todos(this.todos);
+}
+
+/* 
+Map<String, dynamic> dados = json.decode(response.body);
+      //print(dados);
+
+      /*Todo todo = Todo(
+          dados['userId'], dados['id'], dados['title'], dados['completed']); */
+
+      //print(dados['title']);
+
+      Todo todo = Todo.fromJson(dados);
+      //print(todo.title);
+      print(todo.toJson());
+
+      */
